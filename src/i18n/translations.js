@@ -1,0 +1,38 @@
+const translations = {
+  RU: {
+    home: 'Главная',
+    cart: 'Корзина',
+    favorites: 'Избранное',
+    addToCart: 'В корзину',
+    inCart: 'В корзине',
+    perDay: 'сом/день',
+    catalog: 'Каталог',
+    search: 'Поиск товаров...',
+    menu: 'Меню',
+    close: 'Закрыть',
+    allCategories: 'Все категории',
+    strollers: 'Коляски',
+    carSeats: 'Автокресла',
+    toys: 'Игрушки',
+    furniture: 'Мебель',
+  },
+  TJ: {
+    home: 'Асосӣ',
+    cart: 'Сабад',
+    favorites: 'Дӯстдоштаҳо',
+    addToCart: 'Ба сабад',
+    inCart: 'Дар сабад',
+    perDay: 'сомонӣ/рӯз',
+    catalog: 'Каталог',
+    search: 'Ҷустуҷӯи молҳо...',
+    menu: 'Меню',
+    close: 'Бастан',
+    allCategories: 'Ҳамаи категорияҳо',
+    strollers: 'Аробачаҳо',
+    carSeats: 'Курсиҳои мошин',
+    toys: 'Бозичаҳо',
+    furniture: 'Мебел',
+  },
+}
+
+export default translations
