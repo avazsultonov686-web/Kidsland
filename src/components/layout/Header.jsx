@@ -1,26 +1,50 @@
 import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import { useNavigation } from '../../context/NavigationContext'
 import { useTranslation } from '../../hooks/useTranslation'
 import KidsLendLogo from '../ui/KidsLendLogo'
+
+const DRAWER_SECTIONS = [
+  {
+    items: [
+      { page: 'home',      icon: '🏠', colorIdx: 0 },
+      { page: 'catalog',   icon: '📦', colorIdx: 1 },
+      { page: 'age',       icon: '👶', colorIdx: 2 },
+      { page: 'popular',   icon: '⭐', colorIdx: 3 },
+      { page: 'promo',     icon: '🎁', colorIdx: 4 },
+    ],
+  },
+  {
+    items: [
+      { page: 'favorites', icon: '❤️', colorIdx: 5 },
+    ],
+  },
+  {
+    items: [
+      { page: 'delivery',  icon: '🚚', colorIdx: 0 },
+      { page: 'support',   icon: '💬', colorIdx: 2 },
+      { page: 'about',     icon: 'ℹ️', colorIdx: 3 },
+    ],
+  },
+]
+
+const MENU_COLORS = ['#E8312A', '#FF6B2B', '#4CAF50', '#F5C400', '#9B59B6', '#E8312A', '#2196F3']
 
 export default function Header() {
   const { toggleLanguage } = useApp()
   const { t, language } = useTranslation()
+  const { navigate, page: currentPage } = useNavigation()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const menuItems = [
-    { key: 'allCategories' },
-    { key: 'strollers' },
-    { key: 'carSeats' },
-    { key: 'toys' },
-    { key: 'furniture' },
-  ]
+  const handleNavigate = (page) => {
+    navigate(page)
+    setMenuOpen(false)
+  }
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
         <div className="flex items-center justify-between px-4 h-14">
-          {/* Burger menu */}
           <button
             onClick={() => setMenuOpen(true)}
             className="w-10 h-10 flex items-center justify-center text-gray-700 active:scale-90 transition-transform rounded-xl"
@@ -29,12 +53,13 @@ export default function Header() {
             <BurgerIcon />
           </button>
 
-          {/* Real logo — centered absolutely so it doesn't affect flex layout */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center">
+          <button
+            className="absolute left-1/2 -translate-x-1/2"
+            onClick={() => handleNavigate('home')}
+          >
             <KidsLendLogo className="h-10 w-auto object-contain" />
-          </div>
+          </button>
 
-          {/* Language switcher */}
           <button
             onClick={toggleLanguage}
             className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-1.5 text-sm font-bold active:scale-95 transition-transform"
@@ -46,7 +71,6 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Rainbow stripe matching logo colors */}
         <div className="flex h-[3px]">
           <div className="flex-1 bg-brand-red" />
           <div className="flex-1 bg-brand-orange" />
@@ -58,15 +82,18 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Slide-in drawer menu */}
+      {/* Drawer */}
       {menuOpen && (
         <div className="fixed inset-0 z-[100] flex">
+          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setMenuOpen(false)}
           />
+
+          {/* Panel */}
           <nav className="relative z-10 w-72 max-w-[85vw] h-full bg-white shadow-2xl flex flex-col">
-            {/* Drawer header with logo */}
+            {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <KidsLendLogo className="h-10 w-auto object-contain" />
               <button
@@ -89,25 +116,45 @@ export default function Header() {
               <div className="flex-1 bg-brand-purple" />
             </div>
 
-            {/* Menu items */}
-            <ul className="flex-1 overflow-y-auto py-3">
-              {menuItems.map(({ key }, i) => (
-                <li key={key}>
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    className="w-full text-left px-5 py-3.5 text-base font-medium text-gray-800 hover:bg-gray-50 active:bg-gray-100 transition-colors flex items-center gap-3"
-                  >
-                    <span
-                      className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: MENU_COLORS[i % MENU_COLORS.length] }}
-                    />
-                    {t(key)}
-                  </button>
+            {/* Menu sections */}
+            <ul className="flex-1 overflow-y-auto py-2">
+              {DRAWER_SECTIONS.map((section, si) => (
+                <li key={si}>
+                  {si > 0 && <div className="mx-5 my-1.5 h-px bg-gray-100" />}
+                  <ul>
+                    {section.items.map(({ page, icon, colorIdx }) => {
+                      const isActive = currentPage === page
+                      return (
+                        <li key={page}>
+                          <button
+                            onClick={() => handleNavigate(page)}
+                            className={`
+                              w-full text-left px-5 py-3.5 flex items-center gap-3.5
+                              text-[15px] font-medium transition-colors
+                              ${isActive
+                                ? 'bg-gray-50 text-pastel-ink font-semibold'
+                                : 'text-gray-700 hover:bg-gray-50 active:bg-gray-100'
+                              }
+                            `}
+                          >
+                            <span className="text-[18px] w-7 text-center leading-none">{icon}</span>
+                            <span className="flex-1">{t(page)}</span>
+                            {isActive && (
+                              <span
+                                className="w-2 h-2 rounded-full flex-shrink-0"
+                                style={{ backgroundColor: MENU_COLORS[colorIdx] }}
+                              />
+                            )}
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 </li>
               ))}
             </ul>
 
-            {/* Tagline at bottom */}
+            {/* Footer */}
             <div className="px-5 py-4 border-t border-gray-100">
               <p className="text-xs text-gray-400 text-center italic">
                 Игрушки для счастливого детства
@@ -119,8 +166,6 @@ export default function Header() {
     </>
   )
 }
-
-const MENU_COLORS = ['#E8312A', '#FF6B2B', '#F5C400', '#4CAF50', '#00B4B4', '#2196F3', '#9B59B6']
 
 function BurgerIcon() {
   return (

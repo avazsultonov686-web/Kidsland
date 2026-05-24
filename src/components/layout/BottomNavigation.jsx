@@ -1,29 +1,32 @@
 import { useApp } from '../../context/AppContext'
+import { useNavigation } from '../../context/NavigationContext'
 import { useTranslation } from '../../hooks/useTranslation'
 
 const NAV_ITEMS = [
-  { key: 'home',      tab: 'home',      icon: HomeIcon },
-  { key: 'cart',      tab: 'cart',      icon: CartIcon,     badge: true },
-  { key: 'favorites', tab: 'favorites', icon: HeartIcon },
+  { key: 'home',      icon: HomeIcon },
+  { key: 'catalog',   icon: GridIcon },
+  { key: 'cart',      icon: CartIcon,  badge: true },
+  { key: 'favorites', icon: HeartIcon },
 ]
 
-export default function BottomNavigation({ activeTab, onTabChange }) {
+export default function BottomNavigation() {
   const { cartCount } = useApp()
+  const { page: activeTab, navigate } = useNavigation()
   const { t } = useTranslation()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200">
       <div className="flex items-stretch h-16">
-        {NAV_ITEMS.map(({ key, tab, icon: Icon, badge }) => {
-          const isActive = activeTab === tab
+        {NAV_ITEMS.map(({ key, icon: Icon, badge }) => {
+          const isActive = activeTab === key
           return (
             <button
-              key={tab}
-              onClick={() => onTabChange(tab)}
+              key={key}
+              onClick={() => navigate(key)}
               className={`
                 flex-1 flex flex-col items-center justify-center gap-0.5
                 active:scale-95 transition-all duration-100
-                ${isActive ? 'text-brand-red' : 'text-gray-400 hover:text-gray-600'}
+                ${isActive ? 'text-brand-red' : 'text-gray-400'}
               `}
               aria-label={t(key)}
             >
@@ -48,16 +51,27 @@ export default function BottomNavigation({ activeTab, onTabChange }) {
 
 function HomeIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" />
       <path d="M9 21V12h6v9" />
     </svg>
   )
 }
 
+function GridIcon({ active }) {
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  )
+}
+
 function CartIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
       <line x1="3" y1="6" x2="21" y2="6" />
       <path d="M16 10a4 4 0 01-8 0" />
@@ -67,7 +81,7 @@ function CartIcon({ active }) {
 
 function HeartIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? '#E63329' : 'none'} stroke={active ? '#E63329' : 'currentColor'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill={active ? '#E8312A' : 'none'} stroke={active ? '#E8312A' : 'currentColor'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
     </svg>
   )
