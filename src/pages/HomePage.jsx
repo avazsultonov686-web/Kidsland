@@ -26,7 +26,6 @@ const BANNER_SLIDES = [
 
 const PERKS = [
   { icon: '🛡️', label: 'Безопасные игрушки' },
-  { icon: '📅', label: 'Гибкая аренда от 3 дней' },
   { icon: '🚚', label: 'Доставка по городу' },
   { icon: '😊', label: 'Поддержка 24/7' },
 ]
@@ -63,7 +62,7 @@ export default function HomePage() {
               Лучшие игрушки<br />для развития<br />и радости
             </h2>
             <p className="text-[12px] text-gray-500 mb-3">
-              Арендуйте любые игрушки<br />по доступной цене
+              Купите любимые игрушки<br />по доступной цене
             </p>
             <button className="bg-[#E8312A] text-white text-[13px] font-semibold px-4 py-2 rounded-xl active:scale-95 transition-transform">
               Смотреть игрушки
@@ -134,7 +133,7 @@ export default function HomePage() {
                   {product.price} <span className="text-[11px] font-normal text-gray-400">сом/день</span>
                 </p>
                 <button className="w-full bg-[#E8312A] text-white text-[12px] font-semibold py-1.5 rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-1">
-                  🛍️ Арендовать
+                  🛍️ Купить
                 </button>
               </div>
             </div>

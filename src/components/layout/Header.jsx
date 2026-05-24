@@ -77,7 +77,7 @@ export default function Header() {
             className="absolute left-1/2 -translate-x-1/2"
             onClick={() => handleNavigate('home')}
           >
-            <KidsLendLogo className="h-10 w-auto object-contain" />
+            <KidsLendLogo className="h-14 w-auto object-contain" />
           </button>
 
           <button
@@ -177,7 +177,7 @@ export default function Header() {
             {/* Settings */}
             <div className="border-t border-gray-100 py-2">
               <ToggleItem icon="🌙" label="Тёмная тема" />
-              <ToggleItem icon="🔔" label="Уведомления" />
+            
               <button
                 onClick={() => handleNavigate('settings')}
                 className="w-full text-left px-5 py-3.5 flex items-center gap-3.5 text-[15px] font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100"
