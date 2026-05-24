@@ -15,6 +15,9 @@ const translations = {
     carSeats: 'Автокресла',
     toys: 'Игрушки',
     furniture: 'Мебель',
+    development: 'Развитие',
+    categoryBrowse: 'Категории',
+    categoryBrowseHint: 'Найдите лучшее для ребёнка за пару секунд',
   },
   TJ: {
     home: 'Асосӣ',
@@ -32,6 +35,9 @@ const translations = {
     carSeats: 'Курсиҳои мошин',
     toys: 'Бозичаҳо',
     furniture: 'Мебел',
+    development: 'Рушди кӯдак',
+    categoryBrowse: 'Категорияҳо',
+    categoryBrowseHint: 'Бараи кӯдакатон худро чизи беҳтарин биёбед',
   },
 }
 
