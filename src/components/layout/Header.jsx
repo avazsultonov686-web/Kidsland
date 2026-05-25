@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
 import { useNavigation } from '../../context/NavigationContext'
 import { useTranslation } from '../../hooks/useTranslation'
-
+import KidsLendLogo from '../ui/KidsLendLogo'
 const DRAWER_SECTIONS = [
   {
     items: [
