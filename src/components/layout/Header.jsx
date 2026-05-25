@@ -63,7 +63,7 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="flex items-center justify-between px-4 h-20">
+        <div className="flex items-center justify-between px-4 h-16">
           <button
             onClick={() => setMenuOpen(true)}
             className="w-10 h-10 flex items-center justify-center text-gray-700 active:scale-90 transition-transform rounded-xl"
@@ -76,7 +76,7 @@ export default function Header() {
             className="absolute left-1/2 -translate-x-1/2"
             onClick={() => handleNavigate('home')}
           >
-            <KidsLendLogo className="h-16 w-auto object-contain" />
+            <KidsLendLogo className="h-24 w-auto object-contain" />
           </button>
 
           <button
