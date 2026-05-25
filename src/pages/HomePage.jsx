@@ -36,7 +36,7 @@ export default function HomePage() {
   const [slide, setSlide] = useState(0)
 
   return (
-    <div className="min-h-full bg-[#faf9fc] pb-6">
+    <div className="min-h-full bg-[#faf9fc] pb-6 pt-16">
 
       {/* Search */}
       <div className="px-4 pt-4 mb-4">

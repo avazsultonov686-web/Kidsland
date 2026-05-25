@@ -76,7 +76,7 @@ export default function Header() {
             className="absolute left-1/2 -translate-x-1/2"
             onClick={() => handleNavigate('home')}
           >
-            <KidsLendLogo className="h-24 w-auto object-contain" />
+            <KidsLendLogo className="h-34 w-auto object-contain" />
           </button>
 
           <button
