@@ -63,7 +63,7 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="flex items-center justify-between px-4 h-14">
+        <div className="flex items-center justify-between px-4 h-20">
           <button
             onClick={() => setMenuOpen(true)}
             className="w-10 h-10 flex items-center justify-center text-gray-700 active:scale-90 transition-transform rounded-xl"
@@ -76,7 +76,7 @@ export default function Header() {
             className="absolute left-1/2 -translate-x-1/2"
             onClick={() => handleNavigate('home')}
           >
-            <KidsLendLogo className="h-14 w-auto object-contain" />
+            <KidsLendLogo className="h-16 w-auto object-contain" />
           </button>
 
           <button
@@ -114,7 +114,7 @@ export default function Header() {
           <nav className="relative z-10 w-72 max-w-[85vw] h-full bg-white shadow-2xl flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-              <KidsLendLogo className="h-24 w-auto object-contain" />
+              <KidsLendLogo className="h-16 w-auto object-contain" />
               <button
                 onClick={() => setMenuOpen(false)}
                 className="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-gray-700 active:scale-90 transition-transform rounded-full"
