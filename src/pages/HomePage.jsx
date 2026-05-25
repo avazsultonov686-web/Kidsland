@@ -1,22 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProductCard from '../components/product/ProductCard'
 import CategorySection from '../components/category/CategorySection'
 import { useTranslation } from '../hooks/useTranslation'
-
-const MOCK_PRODUCTS = [
-  { id: 1, name: 'Коляска Bugaboo Fox 3', price: 120, category: 'Коляски',
-    image: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400&q=80' },
-  { id: 2, name: 'Автокресло Maxi-Cosi Pebble 360', price: 80, category: 'Автокресла',
-    image: 'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=400&q=80' },
-  { id: 3, name: 'Развивающий коврик Fisher-Price', price: 35, category: 'Игрушки',
-    image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&q=80' },
-  { id: 4, name: 'Кроватка-трансформер Woodi', price: 150, category: 'Мебель',
-    image: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=400&q=80' },
-  { id: 5, name: 'Прыгунки Jolly Jumper', price: 45, category: 'Игрушки',
-    image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&q=80' },
-  { id: 6, name: 'Детский велосипед 3-колёсный', price: 60, category: 'Игрушки',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80' },
-]
+import { fetchProducts } from '../services/products'
 
 const BANNER_SLIDES = [
   { id: 1, bg: '#FFF8EE' },
@@ -34,6 +20,16 @@ const PERKS = [
 export default function HomePage() {
   const { t } = useTranslation()
   const [slide, setSlide] = useState(0)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchProducts()
+      .then(data => {
+        if (data && data.length > 0) setProducts(data)
+      })
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <div className="min-h-full bg-[#faf9fc] pb-6 pt-16">
@@ -70,19 +66,17 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Right side */}
           <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
             <img
               src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=200&q=80"
               alt="baby"
-              className="w-28 h-28 object-cover rounded-2xl"
+              className="w-24 h-24 object-cover rounded-2xl"
             />
             <div className="bg-blue-500 text-white text-[11px] font-bold rounded-full w-14 h-14 flex items-center justify-center text-center leading-tight">
               Более<br />500+<br />игрушек
             </div>
           </div>
 
-          {/* Dots */}
           <div className="absolute bottom-3 left-5 flex gap-1.5">
             {BANNER_SLIDES.map((_, i) => (
               <button
@@ -107,39 +101,38 @@ export default function HomePage() {
           <button className="text-[13px] text-blue-500 font-medium">
             Смотреть все
           </button>
-        </div>
-
-        <div className="flex gap-3 overflow-x-auto px-4 pb-1 scrollbar-none">
-          {MOCK_PRODUCTS.map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[160px] bg-white rounded-2xl shadow-sm overflow-hidden">
-              <div className="relative">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-[120px] object-cover"
-                  onError={(e) => { e.target.style.display='none' }}
-                />
-                <span className="absolute top-2 left-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  0-3 лет
-                </span>
-                <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm">
-                  <span className="text-gray-400 text-sm">♡</span>
-                </button>
+        </div>{loading ? (
+          <div className="px-4 text-gray-400 text-sm">Загрузка...</div>
+        ) : (
+          <div className="flex gap-3 overflow-x-auto px-4 pb-1 scrollbar-none">
+            {products.map((product) => (
+              <div key={product.id} className="flex-shrink-0 w-[160px] bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div className="relative">
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-full h-[120px] object-cover"
+                    onError={(e) => { e.target.style.display='none' }}
+                  />
+                  <span className="absolute top-2 left-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    {product.category}
+                  </span>
+                </div>
+                <div className="p-2.5">
+                  <p className="text-[12px] text-gray-700 font-medium leading-tight mb-1 line-clamp-2">
+                    {product.name}
+                  </p>
+                  <p className="text-[15px] font-bold text-[#E8312A] mb-2">
+                    {product.price} <span className="text-[11px] font-normal text-gray-400">сом</span>
+                  </p>
+                  <button className="w-full bg-[#E8312A] text-white text-[12px] font-semibold py-1.5 rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-1">
+                    🛍️ Купить
+                  </button>
+                </div>
               </div>
-              <div className="p-2.5">
-                <p className="text-[12px] text-gray-700 font-medium leading-tight mb-1 line-clamp-2">
-                  {product.name}
-                </p>
-                <p className="text-[15px] font-bold text-[#E8312A] mb-2">
-                  {product.price} <span className="text-[11px] font-normal text-gray-400">сом/день</span>
-                </p>
-                <button className="w-full bg-[#E8312A] text-white text-[12px] font-semibold py-1.5 rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-1">
-                  🛍️ Купить
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Perks */}
