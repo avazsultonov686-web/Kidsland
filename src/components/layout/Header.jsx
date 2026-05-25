@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
 import { useNavigation } from '../../context/NavigationContext'
 import { useTranslation } from '../../hooks/useTranslation'
-import KidsLendLogo from '../ui/KidsLendLogo'
 
 const DRAWER_SECTIONS = [
   {
@@ -70,13 +69,6 @@ export default function Header() {
             aria-label={t('menu')}
           >
             <BurgerIcon />
-          </button>
-
-          <button
-            className="absolute left-1/2 -translate-x-1/2"
-            onClick={() => handleNavigate('home')}
-          >
-            <KidsLendLogo className="h-34 w-auto object-contain" />
           </button>
 
           <button
