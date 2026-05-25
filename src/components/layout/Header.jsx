@@ -11,7 +11,6 @@ const DRAWER_SECTIONS = [
       { page: 'catalog',   icon: '📦', colorIdx: 1 },
       { page: 'age',       icon: '👶', colorIdx: 2 },
       { page: 'popular',   icon: '⭐', colorIdx: 3 },
-      { page: 'promo',     icon: '🎁', colorIdx: 4 },
     ],
   },
   {

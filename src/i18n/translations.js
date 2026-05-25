@@ -18,12 +18,25 @@ const translations = {
     menu:       'Меню',
     close:      'Закрыть',
 
-    allCategories: 'Все категории',
+    allCategories: 'Все',
     strollers:     'Коляски',
     carSeats:      'Автокресла',
     toys:          'Игрушки',
     furniture:     'Мебель',
     development:   'Развитие',
+
+    catConstructors: 'Конструкторы',
+    catSoftToys:     'Мягкие игрушки',
+    catRemote:       'Радиоуправляемые',
+    catCars:         'Машинки',
+    catStrollers:    'Коляски и самокаты',
+    catFurniture:    'Мебель детская',
+    catDolls:        'Куклы',
+    catPrincess:     'Наборы принцесс',
+
+    back:        'Назад',
+    buy:         'Купить',
+    description: 'Описание',
 
     categoryBrowse:     'Категории',
     categoryBrowseHint: 'Найдите лучшее для ребёнка за пару секунд',
@@ -71,12 +84,25 @@ const translations = {
     menu:       'Меню',
     close:      'Бастан',
 
-    allCategories: 'Ҳамаи категорияҳо',
+    allCategories: 'Ҳама',
     strollers:     'Аробачаҳо',
     carSeats:      'Курсиҳои мошин',
     toys:          'Бозичаҳо',
     furniture:     'Мебел',
     development:   'Рушди кӯдак',
+
+    catConstructors: 'Кonstruktorho',
+    catSoftToys:     'Бозичаҳои мулои',
+    catRemote:       'Дистансионӣ',
+    catCars:         'Мошинҳо',
+    catStrollers:    'Аробача ва самокат',
+    catFurniture:    'Мебели кӯдакона',
+    catDolls:        'Лӯхтакҳо',
+    catPrincess:     'Маҷмӯаи шоҳзода',
+
+    back:        'Бозгашт',
+    buy:         'Харидан',
+    description: 'Тавсиф',
 
     categoryBrowse:     'Категорияҳо',
     categoryBrowseHint: 'Бараи кӯдакатон худро чизи беҳтарин биёбед',

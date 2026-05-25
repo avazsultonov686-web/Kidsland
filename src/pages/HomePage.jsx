@@ -25,8 +25,9 @@ const BANNER_SLIDES = [
 ]
 
 const PERKS = [
-  { icon: '🛡️', label: 'Безопасные игрушки' },
+  { icon: '🔄', label: 'Гарантия возврата в течение 72ч' },
   { icon: '🚚', label: 'Доставка по городу' },
+  { icon: '✅', label: 'Гарантия качества' },
   { icon: '😊', label: 'Поддержка 24/7' },
 ]
 
@@ -54,7 +55,7 @@ export default function HomePage() {
       {/* Hero Banner */}
       <div className="px-4 mb-5">
         <div
-          className="relative rounded-3xl overflow-hidden p-5 min-h-[160px] flex items-center"
+          className="relative rounded-3xl overflow-hidden p-5 min-h-[120px] flex items-center"
           style={{ backgroundColor: BANNER_SLIDES[slide].bg }}
         >
           <div className="flex-1 z-10">

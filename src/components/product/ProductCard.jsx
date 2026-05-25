@@ -1,27 +1,37 @@
 import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import { useNavigation } from '../../context/NavigationContext'
 
 export default function ProductCard({ product }) {
-  const { addToCart, toggleFavorite, favorites, cartItems } = useApp()
+  const { addToCart, toggleFavorite, favorites } = useApp()
+  const { navigate } = useNavigation()
   const [imgError, setImgError] = useState(false)
 
   const isFavorite = favorites.includes(product.id)
-  const inCart = cartItems.some((item) => item.id === product.id)
+
+  const openProduct = () => {
+    navigate('product', { product })
+  }
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer active:scale-[0.98] transition-transform">
-      
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={openProduct}
+      onKeyDown={(e) => e.key === 'Enter' && openProduct()}
+      className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer active:scale-[0.98] transition-transform"
+    >
       {/* Image */}
       <div className="relative bg-gray-50 aspect-[4/3] overflow-hidden">
         {product.image && !imgError ? (
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover pointer-events-none"
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-gray-300">
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-300 pointer-events-none">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="3" />
               <circle cx="8.5" cy="8.5" r="1.5" />
@@ -34,7 +44,8 @@ export default function ProductCard({ product }) {
         {/* Favorite */}
         <button
           onClick={(e) => { e.stopPropagation(); toggleFavorite(product.id) }}
-          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-sm active:scale-90 transition-transform"
+          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-sm active:scale-90 transition-transform z-10"
+          aria-label="Toggle favorite"
         >
           <svg width="16" height="16" viewBox="0 0 24 24"
             fill={isFavorite ? '#E63329' : 'none'}
@@ -47,7 +58,7 @@ export default function ProductCard({ product }) {
 
         {/* Category */}
         {product.category && (
-          <span className="absolute top-2 left-2 bg-brand-orange/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+          <span className="absolute top-2 left-2 bg-brand-orange/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full pointer-events-none">
             {product.category}
           </span>
         )}
@@ -65,7 +76,7 @@ export default function ProductCard({ product }) {
 
         <button
           onClick={(e) => { e.stopPropagation(); addToCart(product) }}
-          className="w-full py-2 rounded-xl text-sm font-semibold bg-brand-red text-white active:scale-95 transition-transform"
+          className="w-full py-2 rounded-xl text-sm font-semibold bg-brand-red text-white active:scale-95 transition-transform z-10"
         >
           🛍️ Купить
         </button>
