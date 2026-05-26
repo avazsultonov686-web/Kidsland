@@ -8,22 +8,25 @@ export const ALL_PAGES = [
 
 export function NavigationProvider({ children }) {
   const [page, setPage] = useState('home')
+  const [params, setParams] = useState(null)
   const [product, setProduct] = useState(null)
 
   const navigate = useCallback((to, options) => {
     if (to === 'product') {
       setPage('product')
       setProduct(options?.product ?? null)
+      setParams(options ?? null)
       return
     }
     if (ALL_PAGES.includes(to)) {
       setPage(to)
       setProduct(null)
+      setParams(options ?? null)
     }
   }, [])
 
   return (
-    <NavigationContext.Provider value={{ page, navigate, product }}>
+    <NavigationContext.Provider value={{ page, navigate, params, product }}>
       {children}
     </NavigationContext.Provider>
   )

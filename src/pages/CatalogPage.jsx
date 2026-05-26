@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import ProductCard from '../components/product/ProductCard'
 import PageShell from '../components/ui/PageShell'
 import { useTranslation } from '../hooks/useTranslation'
+import { useNavigation } from '../context/NavigationContext'
 import { fetchProducts } from '../services/products'
-
 const CATEGORIES = [
   { key: 'all', label: 'Все' },
   { key: 'Конструкторы', label: 'Конструкторы' },
@@ -18,13 +18,17 @@ const CATEGORIES = [
 
 export default function CatalogPage() {
   const { t } = useTranslation()
+  const { params } = useNavigation()
   const [active, setActive] = useState('all')
   const [search, setSearch] = useState('')
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchProducts()
+    if (params?.category) setActive(params.category)
+  }, [params])
+
+  useEffect(() => {    fetchProducts()
       .then(data => { if (data) setProducts(data) })
       .finally(() => setLoading(false))
   }, [])

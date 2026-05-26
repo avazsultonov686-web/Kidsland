@@ -1,8 +1,8 @@
-
 import { useState, useEffect } from 'react'
 import ProductCard from '../components/product/ProductCard'
 import CategorySection from '../components/category/CategorySection'
 import { useTranslation } from '../hooks/useTranslation'
+import { useNavigation } from '../context/NavigationContext'
 import { fetchProducts } from '../services/products'
 
 const BANNER_SLIDES = [
@@ -20,6 +20,7 @@ const PERKS = [
 
 export default function HomePage() {
   const { t } = useTranslation()
+  const { navigate } = useNavigation()
   const [slide, setSlide] = useState(0)
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -91,7 +92,10 @@ export default function HomePage() {
       </div>
 
       {/* Categories */}
-      <CategorySection className="mb-5" />
+      <CategorySection
+        className="mb-5"
+        onSelect={(categoryId) => navigate('catalog', { category: categoryId })}
+      />
 
       {/* Popular */}
       <div className="mb-5">
