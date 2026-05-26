@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { useTranslation } from '../../hooks/useTranslation'
 
 const CATEGORY_CONFIG = [
-  { id: 'all',        labelKey: 'allCategories',  emoji: '🏠', bg: '#FFE8E8' },
-  { id: 'constructors', labelKey: 'catConstructors', emoji: '🧱', bg: '#FFE8D6' },
-  { id: 'soft-toys',  labelKey: 'catSoftToys',    emoji: '🧸', bg: '#FFF0D6' },
-  { id: 'remote',     labelKey: 'catRemote',      emoji: '🎮', bg: '#E8F5E8' },
-  { id: 'cars',       labelKey: 'catCars',        emoji: '🚗', bg: '#E8F0FF' },
-  { id: 'strollers',  labelKey: 'catStrollers',   emoji: '🛴', bg: '#F0E8FF' },
-  { id: 'furniture',  labelKey: 'catFurniture',   emoji: '🛏️', bg: '#E8FFF0' },
-  { id: 'dolls',      labelKey: 'catDolls',       emoji: '🪆', bg: '#FFE8F5' },
-  { id: 'princess',   labelKey: 'catPrincess',    emoji: '👑', bg: '#FFF8E8' },
+  { id: 'all',                  labelKey: 'allCategories',  emoji: '🏠', bg: '#FFE8E8' },
+  { id: 'Конструкторы',         labelKey: 'catConstructors', emoji: '🧱', bg: '#FFE8D6' },
+  { id: 'Мягкие игрушки',       labelKey: 'catSoftToys',    emoji: '🧸', bg: '#FFF0D6' },
+  { id: 'Радиоуправляемые',     labelKey: 'catRemote',      emoji: '🎮', bg: '#E8F5E8' },
+  { id: 'Машинки',              labelKey: 'catCars',        emoji: '🚗', bg: '#E8F0FF' },
+  { id: 'Коляски и самокаты',   labelKey: 'catStrollers',   emoji: '🛴', bg: '#F0E8FF' },
+  { id: 'Мебель детская',       labelKey: 'catFurniture',   emoji: '🛏', bg: '#E8FFF0' },
+  { id: 'Куклы',                labelKey: 'catDolls',       emoji: '🪆', bg: '#FFE8F5' },
+  { id: 'Наборы принцесс',      labelKey: 'catPrincess',    emoji: '👑', bg: '#FFF8E8' },
 ]
 
 export default function CategorySection({ className = '', onSelect }) {
