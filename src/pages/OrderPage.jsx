@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import OrderForm from '../components/order/OrderForm'
 import PageShell from '../components/ui/PageShell'
+import Loader from '../components/ui/Loader'
 import { useApp } from '../context/AppContext'
 import { useAuth } from '../context/AuthContext'
 import { useCreateOrder } from '../hooks/useOrders'
@@ -24,6 +25,23 @@ export default function OrderPage() {
     paymentMethod: 'cash',
     comment: '',
   })
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate('/cart', { replace: true })
+    }
+  }, [cartItems.length, navigate])
+
+  useEffect(() => {
+    if (user) {
+      setForm((f) => ({
+        ...f,
+        firstName: f.firstName || user.firstName || '',
+        lastName: f.lastName || user.lastName || '',
+        phone: f.phone || user.phone || '',
+      }))
+    }
+  }, [user])
 
   const onChange = (key, val) => setForm((f) => ({ ...f, [key]: val }))
 
@@ -68,10 +86,7 @@ export default function OrderPage() {
     }
   }
 
-  if (!cartItems.length) {
-    navigate('/cart', { replace: true })
-    return null
-  }
+  if (cartItems.length === 0) return <Loader className="min-h-screen" />
 
   return (
     <PageShell title={t('orderTitle')}>

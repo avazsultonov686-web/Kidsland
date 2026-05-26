@@ -134,6 +134,7 @@ export default {
   ageMin: 'Возраст от',
   ageMax: 'Возраст до',
   uploadImages: 'Загрузить фото (до 5)',
+  allStatuses: 'Все статусы',
   filterStatus: 'Фильтр по статусу',
   changeStatus: 'Изменить статус',
   accessDenied: 'Доступ запрещён',

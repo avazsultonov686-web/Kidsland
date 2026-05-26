@@ -24,7 +24,7 @@ export default function AdminOrdersPage() {
           onChange={(e) => setStatus(e.target.value)}
           className="w-full mt-1 rounded-xl border border-gray-200 px-3 py-2 text-sm"
         >
-          <option value="all">{t('allCategories')}</option>
+          <option value="all">{t('allStatuses')}</option>
           {Object.entries(ORDER_STATUS_LABELS).map(([key, labelKey]) => (
             <option key={key} value={key}>{t(labelKey)}</option>
           ))}

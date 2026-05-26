@@ -78,6 +78,8 @@ export default function AppRouter() {
           <Route path="admin/orders" element={<AdminOrdersPage />} />
         </Route>
       </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

@@ -16,7 +16,7 @@ export default function ProductFilter({
   onAgeMaxChange,
   sort,
   onSortChange,
-  maxPrice = 5000,
+  maxPrice = 50000,
 }) {
   const { t } = useTranslation()
 
@@ -57,7 +57,11 @@ export default function ProductFilter({
               min={0}
               max={maxPrice}
               value={priceMin}
-              onChange={(e) => onPriceMinChange(Number(e.target.value))}
+              onChange={(e) => {
+                const v = Number(e.target.value)
+                onPriceMinChange(v)
+                if (v > priceMax) onPriceMaxChange(v)
+              }}
               className="flex-1 accent-brand-red"
             />
             <input
@@ -65,7 +69,11 @@ export default function ProductFilter({
               min={0}
               max={maxPrice}
               value={priceMax}
-              onChange={(e) => onPriceMaxChange(Number(e.target.value))}
+              onChange={(e) => {
+                const v = Number(e.target.value)
+                onPriceMaxChange(v)
+                if (v < priceMin) onPriceMinChange(v)
+              }}
               className="flex-1 accent-brand-red"
             />
           </div>

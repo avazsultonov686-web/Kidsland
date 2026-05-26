@@ -16,9 +16,25 @@ const EMPTY = {
   is_active: true,
 }
 
+function toFormValues(initial) {
+  if (!initial) return EMPTY
+  return {
+    name_ru: initial.name_ru || '',
+    name_tj: initial.name_tj || '',
+    description_ru: initial.description_ru || '',
+    description_tj: initial.description_tj || '',
+    price: initial.price ?? '',
+    category: initial.category || CATEGORIES[0].id,
+    age_min: initial.age_min ?? 0,
+    age_max: initial.age_max ?? 12,
+    characteristics: initial.characteristics || {},
+    is_active: initial.is_active ?? true,
+  }
+}
+
 export default function AdminProductForm({ initial, onSave, onCancel, saving }) {
   const { t } = useTranslation()
-  const [form, setForm] = useState(initial || EMPTY)
+  const [form, setForm] = useState(() => toFormValues(initial))
   const [charKey, setCharKey] = useState('')
   const [charVal, setCharVal] = useState('')
   const [files, setFiles] = useState([])

@@ -14,7 +14,7 @@ export default function CatalogPage() {
   const [category, setCategory] = useState('')
   const [search, setSearch] = useState('')
   const [priceMin, setPriceMin] = useState(0)
-  const [priceMax, setPriceMax] = useState(5000)
+  const [priceMax, setPriceMax] = useState(50000)
   const [ageMin, setAgeMin] = useState(0)
   const [ageMax, setAgeMax] = useState(18)
   const [sort, setSort] = useState('new')
@@ -27,11 +27,11 @@ export default function CatalogPage() {
   const filters = useMemo(
     () => ({
       category: category || undefined,
-      search,
-      priceMin,
-      priceMax,
-      ageMin,
-      ageMax,
+      search: search || undefined,
+      priceMin: priceMin > 0 ? priceMin : undefined,
+      priceMax: priceMax < 50000 ? priceMax : undefined,
+      ageMin: ageMin > 0 ? ageMin : undefined,
+      ageMax: ageMax < 18 ? ageMax : undefined,
       sort,
     }),
     [category, search, priceMin, priceMax, ageMin, ageMax, sort]
@@ -59,6 +59,7 @@ export default function CatalogPage() {
         onAgeMaxChange={setAgeMax}
         sort={sort}
         onSortChange={setSort}
+        maxPrice={50000}
       />
 
       {isLoading ? (

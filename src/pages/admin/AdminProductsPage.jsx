@@ -20,8 +20,17 @@ export default function AdminProductsPage() {
 
   const { create, update, remove, toggleActive, uploadImages } = useProductMutations()
 
+  const PRODUCT_FIELDS = [
+    'name_ru', 'name_tj', 'description_ru', 'description_tj',
+    'price', 'category', 'age_min', 'age_max', 'characteristics', 'is_active',
+  ]
+
+  const pickProductFields = (data) =>
+    Object.fromEntries(PRODUCT_FIELDS.map((k) => [k, data[k]]).filter(([, v]) => v !== undefined))
+
   const handleSave = async (data) => {
-    const { files, ...productData } = data
+    const { files, ...raw } = data
+    const productData = pickProductFields(raw)
     try {
       if (editing) {
         await update.mutateAsync({ id: editing.id, data: productData })

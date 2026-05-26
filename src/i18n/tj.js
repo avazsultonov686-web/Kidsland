@@ -134,6 +134,7 @@ export default {
   ageMin: 'Синну сол аз',
   ageMax: 'Синну сол то',
   uploadImages: 'Акс бор кардан (то 5)',
+  allStatuses: 'Ҳама ҳолатҳо',
   filterStatus: 'Филтр аз рӯи ҳолат',
   changeStatus: 'Ҳолат тағир додан',
   accessDenied: 'Дастрасӣ манъ аст',
