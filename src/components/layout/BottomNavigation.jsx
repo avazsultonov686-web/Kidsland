@@ -1,49 +1,50 @@
+import { NavLink } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
-import { useNavigation } from '../../context/NavigationContext'
 import { useTranslation } from '../../hooks/useTranslation'
 
 const NAV_ITEMS = [
-  { key: 'home',      icon: HomeIcon },
-  { key: 'catalog',   icon: GridIcon },
-  { key: 'cart',      icon: CartIcon,  badge: true },
-  { key: 'favorites', icon: HeartIcon },
+  { path: '/', icon: HomeIcon, end: true, key: 'home' },
+  { path: '/catalog', icon: GridIcon, key: 'catalog' },
+  { path: '/cart', icon: CartIcon, badge: true, key: 'cart' },
+  { path: '/favorites', icon: HeartIcon, key: 'favorites' },
 ]
 
 export default function BottomNavigation() {
   const { cartCount } = useApp()
-  const { page: activeTab, navigate } = useNavigation()
   const { t } = useTranslation()
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200">
       <div className="flex items-stretch h-16">
-        {NAV_ITEMS.map(({ key, icon: Icon, badge }) => {
-          const isActive = activeTab === key
-          return (
-            <button
-              key={key}
-              onClick={() => navigate(key)}
-              className={`
-                flex-1 flex flex-col items-center justify-center gap-0.5
-                active:scale-95 transition-all duration-100
-                ${isActive ? 'text-brand-red' : 'text-gray-400'}
-              `}
-              aria-label={t(key)}
-            >
-              <div className="relative">
-                <Icon active={isActive} />
-                {badge && cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-brand-red text-white text-[10px] font-bold leading-none rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
-                    {cartCount > 99 ? '99+' : cartCount}
-                  </span>
-                )}
-              </div>
-              <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-brand-red' : 'text-gray-400'}`}>
-                {t(key)}
-              </span>
-            </button>
-          )
-        })}
+        {NAV_ITEMS.map(({ path, icon: Icon, badge, end, key }) => (
+          <NavLink
+            key={path}
+            to={path}
+            end={end}
+            className={({ isActive }) => `
+              flex-1 flex flex-col items-center justify-center gap-0.5
+              active:scale-95 transition-all duration-100
+              ${isActive ? 'text-brand-red' : 'text-gray-400'}
+            `}
+            aria-label={t(key)}
+          >
+            {({ isActive }) => (
+              <>
+                <div className="relative">
+                  <Icon active={isActive} />
+                  {badge && cartCount > 0 && (
+                    <span className="absolute -top-1.5 -right-2 bg-brand-red text-white text-[10px] font-bold leading-none rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
+                      {cartCount > 99 ? '99+' : cartCount}
+                    </span>
+                  )}
+                </div>
+                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-brand-red' : 'text-gray-400'}`}>
+                  {t(key)}
+                </span>
+              </>
+            )}
+          </NavLink>
+        ))}
       </div>
     </nav>
   )

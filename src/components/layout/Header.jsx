@@ -1,27 +1,29 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
-import { useNavigation } from '../../context/NavigationContext'
+import { useAuth } from '../../context/AuthContext'
 import { useTranslation } from '../../hooks/useTranslation'
 import KidsLendLogo from '../ui/KidsLendLogo'
+
 const DRAWER_SECTIONS = [
   {
     items: [
-      { page: 'home',      icon: '🏠', colorIdx: 0 },
-      { page: 'catalog',   icon: '📦', colorIdx: 1 },
-      { page: 'age',       icon: '👶', colorIdx: 2 },
-      { page: 'popular',   icon: '⭐', colorIdx: 3 },
+      { path: '/', icon: '🏠', colorIdx: 0, key: 'home' },
+      { path: '/catalog', icon: '📦', colorIdx: 1, key: 'catalog' },
+      { path: '/profile', icon: '👤', colorIdx: 2, key: 'profile' },
     ],
   },
   {
     items: [
-      { page: 'favorites', icon: '❤️', colorIdx: 5 },
+      { path: '/favorites', icon: '❤️', colorIdx: 5, key: 'favorites' },
+      { path: '/orders', icon: '📋', colorIdx: 3, key: 'orders' },
     ],
   },
   {
     items: [
-      { page: 'delivery',  icon: '🚚', colorIdx: 0 },
-      { page: 'support',   icon: '💬', colorIdx: 2 },
-      { page: 'about',     icon: 'ℹ️', colorIdx: 3 },
+      { path: '/delivery', icon: '🚚', colorIdx: 0, key: 'delivery' },
+      { path: '/support', icon: '💬', colorIdx: 2, key: 'support' },
+      { path: '/about', icon: 'ℹ️', colorIdx: 3, key: 'about' },
     ],
   },
 ]
@@ -30,34 +32,9 @@ const MENU_COLORS = ['#E8312A', '#FF6B2B', '#4CAF50', '#F5C400', '#9B59B6', '#E8
 
 export default function Header() {
   const { toggleLanguage } = useApp()
+  const { isAdmin } = useAuth()
   const { t, language } = useTranslation()
-  const { navigate, page: currentPage } = useNavigation()
   const [menuOpen, setMenuOpen] = useState(false)
-
-  const handleNavigate = (page) => {
-    navigate(page)
-    setMenuOpen(false)
-  }
-
-  function ToggleItem({ icon, label }) {
-    const [on, setOn] = useState(false)
-    return (
-      <div className="w-full px-5 py-3.5 flex items-center gap-3.5">
-        <span className="text-[18px] w-7 text-center">{icon}</span>
-        <span className="flex-1 text-[15px] font-medium text-gray-700">{label}</span>
-        <button
-          onClick={() => setOn(!on)}
-          className={`w-11 h-6 rounded-full transition-colors duration-200 ${on ? 'bg-green-400' : 'bg-gray-200'}`}
-        >
-          <div
-            className={`w-5 h-5 bg-white rounded-full shadow-sm mx-0.5 transition-transform duration-200 ${
-              on ? 'translate-x-5' : 'translate-x-0'
-            }`}
-          />
-        </button>
-      </div>
-    )
-  }
 
   return (
     <>
@@ -93,18 +70,14 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Drawer */}
       {menuOpen && (
         <div className="fixed inset-0 z-[100] flex">
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setMenuOpen(false)}
           />
 
-          {/* Panel */}
           <nav className="relative z-10 w-72 max-w-[85vw] h-full bg-white shadow-2xl flex flex-col">
-            {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <KidsLendLogo className="h-16 w-auto object-contain" />
               <button
@@ -116,7 +89,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Rainbow stripe */}
             <div className="flex h-[3px]">
               <div className="flex-1 bg-brand-red" />
               <div className="flex-1 bg-brand-orange" />
@@ -127,58 +99,46 @@ export default function Header() {
               <div className="flex-1 bg-brand-purple" />
             </div>
 
-            {/* Menu sections */}
             <ul className="flex-1 overflow-y-auto py-2">
               {DRAWER_SECTIONS.map((section, si) => (
                 <li key={si}>
                   {si > 0 && <div className="mx-5 my-1.5 h-px bg-gray-100" />}
                   <ul>
-                    {section.items.map(({ page, icon, colorIdx }) => {
-                      const isActive = currentPage === page
-                      return (
-                        <li key={page}>
-                          <button
-                            onClick={() => handleNavigate(page)}
-                            className={`
-                              w-full text-left px-5 py-3.5 flex items-center gap-3.5
-                              text-[15px] font-medium transition-colors
-                              ${isActive
-                                ? 'bg-gray-50 text-pastel-ink font-semibold'
-                                : 'text-gray-700 hover:bg-gray-50 active:bg-gray-100'
-                              }
-                            `}
-                          >
-                            <span className="text-[18px] w-7 text-center leading-none">{icon}</span>
-                            <span className="flex-1">{t(page)}</span>
-                            {isActive && (
-                              <span
-                                className="w-2 h-2 rounded-full flex-shrink-0"
-                                style={{ backgroundColor: MENU_COLORS[colorIdx] }}
-                              />
-                            )}
-                          </button>
-                        </li>
-                      )
-                    })}
+                    {section.items.map(({ path, icon, colorIdx, key }) => (
+                      <li key={path}>
+                        <Link
+                          to={path}
+                          onClick={() => setMenuOpen(false)}
+                          className="w-full text-left px-5 py-3.5 flex items-center gap-3.5 text-[15px] font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                        >
+                          <span className="text-[18px] w-7 text-center leading-none">{icon}</span>
+                          <span className="flex-1">{t(key)}</span>
+                          <span
+                            className="w-2 h-2 rounded-full flex-shrink-0 opacity-40"
+                            style={{ backgroundColor: MENU_COLORS[colorIdx] }}
+                          />
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
               ))}
+
+              {isAdmin && (
+                <li>
+                  <div className="mx-5 my-1.5 h-px bg-gray-100" />
+                  <Link
+                    to="/admin"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-left px-5 py-3.5 flex items-center gap-3.5 text-[15px] font-medium text-brand-red hover:bg-gray-50"
+                  >
+                    <span className="text-[18px] w-7 text-center">⚙️</span>
+                    <span className="flex-1">{t('admin')}</span>
+                  </Link>
+                </li>
+              )}
             </ul>
 
-            {/* Settings */}
-            <div className="border-t border-gray-100 py-2">
-              <ToggleItem icon="🌙" label="Тёмная тема" />
-            
-              <button
-                onClick={() => handleNavigate('settings')}
-                className="w-full text-left px-5 py-3.5 flex items-center gap-3.5 text-[15px] font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100"
-              >
-                <span className="text-[18px] w-7 text-center">⚙️</span>
-                <span className="flex-1">Настройки</span>
-              </button>
-            </div>
-
-            {/* Footer */}
             <div className="px-5 py-4 border-t border-gray-100">
               <p className="text-xs text-gray-400 text-center italic">
                 Игрушки для счастливого детства
